@@ -1,0 +1,19 @@
+{% extends 'interfaz/base.html' %}
+
+{% block content %}
+<div class="col-md-6 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">Cancelar Reservación {{ reservacion.id }}</h4>
+        </div>
+        <div class="card-body">
+            <p>¿Seguro que deseas cancelar la reservación de {{ reservacion.cliente.nombre }} {{ reservacion.cliente.apellidos }} en la habitación {{ reservacion.habitacion.numero }}?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirmar Cancelación</button>
+                <a href="{% url 'lista_reservaciones' %}" class="btn btn-secondary">Regresar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
