@@ -1,0 +1,98 @@
+{% extends 'interfaz/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Reportes y Estadísticas</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Reservaciones Activas</h6>
+                <h3>{{ reservas_activas }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Reservaciones Canceladas</h6>
+                <h3>{{ reservas_canceladas }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Ingresos Totales</h6>
+                <h3>${{ ingresos_totales }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Ingresos por Tipo de Habitación
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Reservas Activas</th>
+                            <th>Ingresos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in reporte_por_tipo %}
+                        <tr>
+                            <td>{{ item.habitacion__tipo }}</td>
+                            <td>{{ item.total_reservas }}</td>
+                            <td>${{ item.ingresos }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">Sin datos registrados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Clientes con Más Reservaciones
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Correo</th>
+                            <th>Total de Reservas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cli in mejores_clientes %}
+                        <tr>
+                            <td>{{ cli.nombre }} {{ cli.apellidos }}</td>
+                            <td>{{ cli.correo }}</td>
+                            <td>{{ cli.num_reservas }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">Sin clientes registrados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
