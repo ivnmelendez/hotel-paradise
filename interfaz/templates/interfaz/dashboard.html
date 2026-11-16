@@ -1,0 +1,91 @@
+{% extends 'interfaz/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Total de Clientes</h6>
+                <h3>{{ total_clientes }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Total de Habitaciones</h6>
+                <h3>{{ total_habitaciones }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Total de Reservaciones</h6>
+                <h3>{{ total_reservaciones }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Habitaciones Disponibles</h6>
+                <h3 class="text-success">{{ habitaciones_disponibles }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Ingresos Generados</h6>
+                <h3 class="text-primary">${{ ingresos_generados }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Últimas Reservaciones</span>
+        <a href="{% url 'crear_reservacion' %}" class="btn btn-hotel btn-sm">Nueva Reservación</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Habitación</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in ultimas_reservaciones %}
+                <tr>
+                    <td>{{ res.id }}</td>
+                    <td>{{ res.cliente.nombre }} {{ res.cliente.apellidos }}</td>
+                    <td>{{ res.habitacion.numero }} - {{ res.habitacion.tipo }}</td>
+                    <td>{{ res.fecha_entrada|date:"d/m/Y" }}</td>
+                    <td>{{ res.fecha_salida|date:"d/m/Y" }}</td>
+                    <td>${{ res.total }}</td>
+                    <td>{{ res.estado }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay reservaciones registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
